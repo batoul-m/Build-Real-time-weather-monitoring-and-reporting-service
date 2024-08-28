@@ -1,0 +1,15 @@
+/home/user/Desktop/testvisual/WeatherMonotring/bin/Debug/net7.0/WeatherMonotring
+/home/user/Desktop/testvisual/WeatherMonotring/bin/Debug/net7.0/WeatherMonotring.deps.json
+/home/user/Desktop/testvisual/WeatherMonotring/bin/Debug/net7.0/WeatherMonotring.runtimeconfig.json
+/home/user/Desktop/testvisual/WeatherMonotring/bin/Debug/net7.0/WeatherMonotring.dll
+/home/user/Desktop/testvisual/WeatherMonotring/bin/Debug/net7.0/WeatherMonotring.pdb
+/home/user/Desktop/testvisual/WeatherMonotring/obj/Debug/net7.0/WeatherMonotring.csproj.AssemblyReference.cache
+/home/user/Desktop/testvisual/WeatherMonotring/obj/Debug/net7.0/WeatherMonotring.GeneratedMSBuildEditorConfig.editorconfig
+/home/user/Desktop/testvisual/WeatherMonotring/obj/Debug/net7.0/WeatherMonotring.AssemblyInfoInputs.cache
+/home/user/Desktop/testvisual/WeatherMonotring/obj/Debug/net7.0/WeatherMonotring.AssemblyInfo.cs
+/home/user/Desktop/testvisual/WeatherMonotring/obj/Debug/net7.0/WeatherMonotring.csproj.CoreCompileInputs.cache
+/home/user/Desktop/testvisual/WeatherMonotring/obj/Debug/net7.0/WeatherMonotring.dll
+/home/user/Desktop/testvisual/WeatherMonotring/obj/Debug/net7.0/refint/WeatherMonotring.dll
+/home/user/Desktop/testvisual/WeatherMonotring/obj/Debug/net7.0/WeatherMonotring.pdb
+/home/user/Desktop/testvisual/WeatherMonotring/obj/Debug/net7.0/WeatherMonotring.genruntimeconfig.cache
+/home/user/Desktop/testvisual/WeatherMonotring/obj/Debug/net7.0/ref/WeatherMonotring.dll
