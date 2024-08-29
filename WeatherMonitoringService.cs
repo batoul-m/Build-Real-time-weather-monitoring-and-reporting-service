@@ -4,19 +4,36 @@ using System.Text.Json;
 namespace WeatherMonotring{
     public class WeatherMonitoringService{
             private readonly List<WeatherBot> _bots;
-            private readonly BotConfiguration _botConfiguration;
-
             public WeatherMonitoringService(string configurationFilePath)
             {
-                _bots = new List<WeatherBot>();
-                _botConfiguration = LoadBotConfiguration(configurationFilePath);
+                BotConfiguration botConfig = LoadBotConfiguration(configurationFilePath);
+                if (botConfig is null){
+                    throw new ArgumentException("Bot configuration could not be loaded.");
+                }
 
-                // Create bots based on configuration
-                _bots.Add(new RainBot(null, _botConfiguration.RainBot is not null ? _botConfiguration.RainBot : throw new ArgumentException("null")));
-                _bots.Add(new SunBot(null, _botConfiguration.SunBot is not null ? _botConfiguration.SunBot : throw new ArgumentException("null")));
-                _bots.Add(new SnowBot(null, _botConfiguration.SnowBot is not null ? _botConfiguration.SnowBot : throw new ArgumentException("null")));
+                _bots = InitializeBots(botConfig);
             }
-
+            private List<WeatherBot> InitializeBots(BotConfiguration config)
+            {
+                var bots = new List<WeatherBot>();
+                if (config.RainBot != null){
+                    bots.Add(new RainBot(null, config.RainBot));
+                }
+                else{
+                    Console.WriteLine("RainBot configuration is missing.");
+                }
+                if (config.SunBot != null){
+                    bots.Add(new SunBot(null, config.SunBot));
+                }else{
+                    Console.WriteLine("SunBot configuration is missing.");
+                }
+                if (config.SnowBot != null){
+                    bots.Add(new SnowBot(null, config.SnowBot));
+                }else{
+                    Console.WriteLine("SnowBot configuration is missing.");
+                }
+                return bots;
+            }
             private BotConfiguration LoadBotConfiguration(string filePath)
             {
                 try

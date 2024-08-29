@@ -4,7 +4,7 @@ using System.Text.Json;
 namespace WeatherMonotring
 {
   public class ReadingJsonData : ReadingData{
-    public required string JsonString { get; set; }
+    public string JsonString { get; set; }
     public ReadingJsonData(string jsonString){
       JsonString = jsonString;
     }
