@@ -1,5 +1,3 @@
-using System;
-
 namespace WeatherMonotring{
     public class BotConfiguration{
         public bool Enabled { get; set; }

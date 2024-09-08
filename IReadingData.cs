@@ -1,6 +1,5 @@
-using System;
 namespace WeatherMonotring{
-    public interface ReadingData{
+    public interface IReadingData{
         void ReadingData();
     }
 }

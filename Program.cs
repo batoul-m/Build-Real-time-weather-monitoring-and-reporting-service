@@ -1,33 +1,55 @@
-﻿using Microsoft.VisualBasic;
-namespace WeatherMonotring;
-internal class Program
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using WeatherMonotring;
+
+namespace WeatherMonitoring
 {
-    private static void Main(string[] args)
+    internal class Program
     {
-        //Rrading data acorrding to user choice
-        Console.WriteLine("enter your choice do you want to read from Json or Xml");
-        var Choice = Console.ReadLine();
-        if(Choice is null) throw new ArgumentException("Choice can not be null");
-        else if(Choice.Equals("Json", StringComparison.OrdinalIgnoreCase)){
-            var JsonString = Console.ReadLine();
-            if (string.IsNullOrEmpty(JsonString))throw new ArgumentException("enter a valid Json String");
-            else if(JsonString.StartsWith("<") && JsonString.EndsWith(">")){
-                ReadingData readingJsonData = new ReadingJsonData(JsonString);
-            }else throw new ArgumentException("not valid Json string");
+        private static void Main(string[] args)
+        {
+            // Set up dependency injection
+            var serviceProvider = new ServiceCollection()
+                .AddSingleton<IWeatherMonitoringService>(sp => new WeatherMonitoringService("path/to/your/configuration.json"))
+                .AddTransient<IReadingData>(sp =>
+                {
+                    Console.WriteLine("Enter your choice (Json or Xml): ");
+                    var choice = Console.ReadLine();
+                    if (choice is null) throw new ArgumentException("Choice cannot be null");
+                    
+                    if (choice.Equals("Json", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Console.WriteLine("Enter JSON string: ");
+                        var jsonString = Console.ReadLine();
+                        if (string.IsNullOrEmpty(jsonString)) throw new ArgumentException("Enter a valid JSON string");
+                        if (jsonString.StartsWith("{") && jsonString.EndsWith("}"))
+                        {
+                            return new ReadingJsonData(jsonString);
+                        }
+                        throw new ArgumentException("Not a valid JSON string");
+                    }
+                    else if (choice.Equals("Xml", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Console.WriteLine("Enter XML string: ");
+                        var xmlString = Console.ReadLine();
+                        if (string.IsNullOrEmpty(xmlString)) throw new ArgumentException("Enter a valid XML string");
+                        if (xmlString.StartsWith("<") && xmlString.EndsWith(">"))
+                        {
+                            return new ReadingXmlData(xmlString);
+                        }
+                        throw new ArgumentException("Not a valid XML string");
+                    }
+                    throw new ArgumentException("Not a valid choice");
+                })
+                .BuildServiceProvider();
 
-        } 
-        else if(Choice.Equals("Xml", StringComparison.OrdinalIgnoreCase)){
-            var XmlString = Console.ReadLine();
-            if (string.IsNullOrEmpty(XmlString))throw new ArgumentException("enter a valid Json String");
-            else if(XmlString.StartsWith("<") && XmlString.EndsWith(">")){
-                ReadingData readingXmlData = new ReadingXmlData(XmlString){XmlString = XmlString};
-            }else throw new ArgumentException("non valid Xml string"); 
+            // Resolve the services
+            var readingData = serviceProvider.GetRequiredService<IReadingData>();
+            readingData.ReadingData();
+
+            var configurationFilePath = "";
+            var weatherMonitoringService = serviceProvider.GetRequiredService<IWeatherMonitoringService>();
+            weatherMonitoringService.LoadBotConfiguration(configurationFilePath);
         }
-        else throw new ArgumentException("not valid choice");
-
-        // Load the bot configuration
-        var configFilePath = "path/to/your/configuration.json";
-        var weatherMonitoringService = new WeatherMonitoringService(configFilePath);
-        
     }
 }
